@@ -1,23 +1,14 @@
-// src/app/calendar/calendar.component.ts
-import { Component, OnInit } from '@angular/core';
+// src/app/components/calendar/calendar.component.ts
+import { Component } from '@angular/core';
 import { CalendarServiceService } from '../../services/calendar-service.service';
-import { format } from 'date-fns';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  templateUrl: './calendar.component.html'
 })
-export class CalendarComponent implements OnInit {
-  currentDate: string = "";
-
-  constructor(private calendarService: CalendarServiceService) {}
-
-  ngOnInit() {
-    this.calendarService.currentDate$.subscribe(date => {
-      this.currentDate = format(date, 'dd-MM-yyyy');
-    });
-  }
+export class CalendarComponent {
+  constructor(public calendarService: CalendarServiceService) {}
 
   goToNextDay() {
     this.calendarService.goToNextDay();
@@ -25,5 +16,12 @@ export class CalendarComponent implements OnInit {
 
   goToPreviousDay() {
     this.calendarService.goToPreviousDay();
+  }
+
+  onDateSelected(event: MatDatepickerInputEvent<Date>) {
+    const selectedDate = event.value;
+    if (selectedDate) {
+      this.calendarService.setCurrentDate(selectedDate);
+    }
   }
 }

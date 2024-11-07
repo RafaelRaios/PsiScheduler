@@ -1,5 +1,21 @@
-<div class="calendar">
-    <button (click)="goToPreviousDay()">Anterior</button>
-    <span>{{ currentDate }}</span>
-    <button (click)="goToNextDay()">Próximo</button>
+<div class="items-center space-x-2 flex flex-col">
+  <!-- Botão Anterior com seta esquerda -->
+   <div class="flex flex-row items-center">
+    <button (click)="goToPreviousDay()" class=" text-black rounded hidden md:flex">
+      <span class="material-icons">chevron_left</span>
+    </button>
+  
+    <!-- Campo de seleção de data -->
+    <mat-form-field appearance="outline" class="mt-4 scale-[90%]">
+      <input matInput [matDatepicker]="picker" (dateChange)="onDateSelected($event)" [placeholder]="calendarService.getCurrentFormattedDate()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <!-- Botão Próximo com seta direita -->
+    <button (click)="goToNextDay()" class=" text-black rounded hidden md:flex">
+      <span class="material-icons">chevron_right</span>
+    </button>
   </div>
+  <h3>{{   this.calendarService.getDayOfWeek() | weekDay }}</h3>
+</div>
